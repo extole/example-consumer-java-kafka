@@ -34,8 +34,9 @@ public class ProductsPactTest {
     PactDslJsonBody body = new PactDslJsonBody();
     body.stringType("name", "product name");
     body.stringType("type", "product series");
-    body.stringType("id", "5cc989d0-d800-434c-b4bb-b1268499e850");
+    body.stringType("id", "v2"); // testing
     body.stringMatcher("version", "v[a-zA-z0-9]+", "v1");
+    body.stringMatcher("id", "v[a-zA-z0-9]+", "v1"); // testing
     body.stringMatcher("event", "^(CREATED|UPDATED|DELETED)$", "CREATED");
 
     Map<String, Object> metadata = new HashMap<>();
