@@ -34,9 +34,10 @@ public class ProductsPactTest {
     PactDslJsonBody body = new PactDslJsonBody();
     body.stringType("name", "product name");
     body.stringType("type", "product series");
-    body.stringType("id", "v2"); // testing
+    body.stringType("id", "5cc989d0-d800-434c-b4bb-b1268499e850");
+//    body.stringType("id", "v2"); // testing failing scenario
     body.stringMatcher("version", "v[a-zA-z0-9]+", "v1");
-    body.stringMatcher("id", "v[a-zA-z0-9]+", "v1"); // testing
+//    body.stringMatcher("id", "v[a-zA-z0-9]+", "v1"); // testing failing scenario
     body.stringMatcher("event", "^(CREATED|UPDATED|DELETED)$", "CREATED");
 
     Map<String, Object> metadata = new HashMap<>();
@@ -51,7 +52,9 @@ public class ProductsPactTest {
   void test(List<Message> messages) throws Exception {
     ObjectMapper mapper = new ObjectMapper();
     System.out.println("Message received -> " + messages.get(0).contentsAsString());
+    System.out.println(messages.get(0).getMetadata().get("kafka_topic"));
     Product product = mapper.readValue(messages.get(0).contentsAsString(), Product.class);
+
 
     assertDoesNotThrow(() -> {
       listener.listen(product);
